@@ -1,0 +1,34 @@
+namespace: tkyi
+name: sd-job-template-builder
+version: '1.0.0'
+description: Pipeline to validate and publish pipeline template
+maintainer: test@gmail.com
+
+config:
+    shared:
+        image: node:18
+
+    jobs:
+        validate:
+            requires: [ ~pr, ~commit ]
+            steps:
+                -   install_prerequisites: npm install screwdriver-template-main
+                -   validate_default_template: ./node_modules/.bin/template-validate
+
+        publish:
+            requires: [ validate ]
+            steps:
+                -   install_prerequisites: npm install screwdriver-template-main
+                -   publish: ./node_modules/.bin/template-publish
+
+#        tag-as-stable:
+#            requires: [ publish ]
+#            environment:
+#                JOB_TEMPLATE_NAME: ""
+#            steps:
+#                -   install_prerequisites: npm install screwdriver-template-main
+#                -   get_latestVersion: |
+#                        set -x
+#                        export LATEST_VERSION="$(./node_modules/.bin/template-get-version-from-tag --name JOB_TEMPLATE_NAME --tag latest")
+#                        echo "Latest version is ${LATEST_VERSION}"
+#                -   set_tag: ./node_modules/.bin/template-tag --name ${JOB_TEMPLATE_NAME} --tag stable --version ${LATEST_VERSION}

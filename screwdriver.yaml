@@ -1,0 +1,15 @@
+shared:
+    image: node:18
+
+jobs:
+    validate:
+        requires: [ ~pr, ~commit ]
+        steps:
+            -   install_prerequisites: npm install screwdriver-template-main
+            -   validate_default_template: ./node_modules/.bin/pipeline-template-validate
+
+    publish:
+        requires: [ validate ]
+        steps:
+            -   install_prerequisites: npm install screwdriver-template-main
+            -   publish: ./node_modules/.bin/pipeline-template-publish
