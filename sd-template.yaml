@@ -5,6 +5,34 @@ description: Pipeline to validate and publish pipeline template
 maintainer: test@gmail.com
 
 config:
+    annotations:
+        foo: a
+        bar: b
+    cache:
+        pipeline: ["node_modules/", "~/.sbt"]
+        event: ["target/generated-intermediate-resouce/*"]
+        job:
+            build: ["target/some-artifact.zip"]
+            publish-preview: ["target/some-artifact.zip"]
+            test: []
+    subscribe:
+        scmUrls:
+            - git@github.com:foo/bar.git#master: [~commit, ~tags, ~release]
+    stages:
+        canary:
+            jobs:
+                - first
+                - second
+            description: "Canary jobs for testing"
+        prod:
+            jobs:
+                - deploy-west
+                - deploy-east
+            description: "Prod deploy jobs"
+    parameters:
+        user:
+            value: sd-bot
+            description: User running build
     shared:
         image: node:18
 
