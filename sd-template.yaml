@@ -12,9 +12,8 @@ config:
         pipeline: ["node_modules/", "~/.sbt"]
         event: ["target/generated-intermediate-resouce/*"]
         job:
-            build: ["target/some-artifact.zip"]
-            publish-preview: ["target/some-artifact.zip"]
-            test: []
+            validate: ["target/some-artifact.zip"]
+            publish: ["target/some-artifact.zip"]
     subscribe:
         scmUrls:
             - git@github.com:foo/bar.git#master: [~commit, ~tags, ~release]
