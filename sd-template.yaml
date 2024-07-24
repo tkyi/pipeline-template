@@ -20,14 +20,9 @@ config:
     stages:
         canary:
             jobs:
-                - first
-                - second
+                - validate
+                - publish
             description: "Canary jobs for testing"
-        prod:
-            jobs:
-                - deploy-west
-                - deploy-east
-            description: "Prod deploy jobs"
     parameters:
         user:
             value: sd-bot
