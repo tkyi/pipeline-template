@@ -1,6 +1,6 @@
 namespace: tkyi
 name: sd-job-template-builder
-version: '1.0.0'
+version: '2.0.0'
 description: Pipeline to validate and publish pipeline template
 maintainer: test@gmail.com
 
